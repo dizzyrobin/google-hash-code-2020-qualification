@@ -16,6 +16,54 @@
       "request": "launch",
       "mainClass": "app.App",
       "projectName": "Problem"
+    },
+    {
+      "type": "java",
+      "name": "Debug A",
+      "request": "launch",
+      "mainClass": "app.App",
+      "projectName": "Problem",
+      "args": "< data/a_example.txt"
+    },
+    {
+      "type": "java",
+      "name": "Debug B",
+      "request": "launch",
+      "mainClass": "app.App",
+      "projectName": "Problem",
+      "args": "< data/b_read_on.txt"
+    },
+    {
+      "type": "java",
+      "name": "Debug C",
+      "request": "launch",
+      "mainClass": "app.App",
+      "projectName": "Problem",
+      "args": "< data/c_incunabula.txt"
+    },
+    {
+      "type": "java",
+      "name": "Debug D",
+      "request": "launch",
+      "mainClass": "app.App",
+      "projectName": "Problem",
+      "args": "< data/d_tough_choices.txt"
+    },
+    {
+      "type": "java",
+      "name": "Debug E",
+      "request": "launch",
+      "mainClass": "app.App",
+      "projectName": "Problem",
+      "args": "< data/e_so_many_books.txt"
+    },
+    {
+      "type": "java",
+      "name": "Debug F",
+      "request": "launch",
+      "mainClass": "app.App",
+      "projectName": "Problem",
+      "args": "< data/f_libraries_of_the_world.txt"
     }
   ]
 }
