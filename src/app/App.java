@@ -2,7 +2,6 @@ package app;
 
 import java.util.Scanner;
 import java.util.Arrays;
-import java.util.Comparator;
 import java.util.LinkedList;
 
 class Library {
@@ -13,6 +12,8 @@ class Library {
     public int totalScore;
     public int totalScanningDays;
     public int scorePerDay;
+
+    public LinkedList<Integer> selectedBooks = new LinkedList<>();
 
     public Library(int id, int signUpDays, int booksPerDay, Integer[] books) {
         this.books = books;
@@ -49,11 +50,15 @@ class Library {
     // Wilix Score (one single time): 9.153.817
     // Wilix Score (every step): 14.371.641
     // Wilix Score (every step with scanned books tracking): 14.623.844
+    // After Wilix's illumination: 23.816.648
+    // After fixing Peter's bug: 24.373.063
+    // After fixing the other Peter's bug: 24.375.422
+    // Our last hope : 24.383.316
 
     public int getWilixScore(int remainingDays, LinkedList<Integer> selectedBooks) {
         int score = 0;
         int skippedBooks = 0;
-        for (int i = 0; i < remainingDays * booksPerDay - signUpDays + skippedBooks; i++) {
+        for (int i = 0; i <= remainingDays * booksPerDay - signUpDays + skippedBooks; i++) {
             if (i >= this.books.length) {
                 break;
             }
@@ -66,7 +71,8 @@ class Library {
             }
         }
 
-        return score;
+        this.selectedBooks = selectedBooks;
+        return score / this.signUpDays;
     }
 }
 
@@ -130,28 +136,23 @@ public class App {
             libraries[i] = new Library(i, lSignDays, lShipDays, lBooks);
         }
 
-        // Order libraries by their score
-        // Arrays.sort(libraries, (Library b1, Library b2) -> {
-        // int b1Score = b1.getWilixScore(days);
-        // int b2Score = b2.getWilixScore(days);
-        // if (b1Score > b2Score)
-        // return 1;
-        // if (b1Score < b2Score)
-        // return -1;
-        // return 0;
-        // });
-
         // Book scan process
         int remainingDays = days;
         int libScanned = 0;
         LinkedList<Library> scanned = new LinkedList<Library>();
 
         // Print solution
-        for (int i = 0; remainingDays > 0 && i < nLibraries; i++) {
+        for (int i = 0; remainingDays >= 0 && i < nLibraries; i++) {
             Library l = getMaxWilixScore(libraries, remainingDays);
             if (l == null)
                 break;
+
+            if (l.signUpDays > remainingDays) {
+                continue;
+            }
+
             libScanned++;
+
             remainingDays -= l.signUpDays;
             scanned.add(l);
             libraries[l.id] = null;
@@ -159,8 +160,8 @@ public class App {
 
         System.out.println(libScanned);
         for (Library l : scanned) {
-            System.out.println(l.id + " " + l.books.length);
-            for (int j : l.books) {
+            System.out.println(l.id + " " + l.selectedBooks.size());
+            for (int j : l.selectedBooks) {
                 System.out.print(j + " ");
             }
             System.out.println();
